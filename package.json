@@ -1,0 +1,16 @@
+{
+  "name": "anydoor",
+  "version": "1.0.0",
+  "description": "Tiny NodeJS Static Web server",
+  "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/verfallen/anydoor.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/verfallen/anydoor/issues"
+  },
+  "homepage": "https://github.com/verfallen/anydoor#readme"
+}
