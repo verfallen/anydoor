@@ -4,6 +4,7 @@ const Handlebars = require('handlebars');
 const path = require('path');
 const config = require('../config/defaultConfig');
 const mime = require('./mime');
+const compress = require('./compress');
 
 const stat = promisify(fs.stat);
 const readdir = promisify(fs.readdir);
@@ -19,7 +20,13 @@ module.exports = async function(req, res, filePath) {
       const contentType = mime(filePath);
       res.statusCode = 200;
       res.setHeader('Content-Type', contentType);
-      fs.createReadStream(filePath).pipe(res);
+
+      let rs = fs.createReadStream(filePath);
+      if (filePath.match(config.compress)) {
+        rs = compress(rs, req, res);
+      }
+
+      rs.pipe(res);
     } else if (stats.isDirectory()) {
       const files = await readdir(filePath);
 
