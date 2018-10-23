@@ -22,7 +22,8 @@
     },
     "homepage": "https://github.com/verfallen/anydoor#readme",
     "dependencies": {
-        "chalk": "^2.4.1"
+        "chalk": "^2.4.1",
+        "handlebars": "^4.0.12"
     },
     "devDependencies": {
         "babel-eslint": "^10.0.1",

@@ -1,8 +1,15 @@
 const promisify = require('util').promisify;
 const fs = require('fs');
+const Handlebars = require('handlebars');
+const path = require('path');
+const config = require('../config/defaultConfig');
 
 const stat = promisify(fs.stat);
 const readdir = promisify(fs.readdir);
+
+const tplPath = path.join(__dirname, '../template/dir.tpl');
+const source = fs.readFileSync(tplPath, 'utf8');
+const template = Handlebars.compile(source);
 
 module.exports = async function(req, res, filePath) {
   try {
@@ -15,8 +22,16 @@ module.exports = async function(req, res, filePath) {
       const files = await readdir(filePath);
 
       res.statusCode = 200;
-      res.setHeader('Content-Type', 'text/plain');
-      res.end(files.join('\n'));
+      res.setHeader('Content-Type', 'text/html');
+
+      const dir = path.relative(config.root,filePath);
+
+      const data = {
+        files,
+        title: path.basename(filePath),
+        dir: dir ? `/${dir}` :''
+      };
+      res.end(template(data));
     }
   } catch (error) {
     res.statusCode = 404;
