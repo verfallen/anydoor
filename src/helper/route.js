@@ -2,7 +2,6 @@ const promisify = require('util').promisify;
 const fs = require('fs');
 const Handlebars = require('handlebars');
 const path = require('path');
-const config = require('../config/defaultConfig');
 const mime = require('./mime');
 const compress = require('./compress');
 const range = require('./range');
@@ -25,7 +24,7 @@ const template = Handlebars.compile(source);
  *   读取文件夹中文件，设置响应头，返回内容类型为html
  *   生成板数据，渲染模板并设置响应内容
  */
-module.exports = async function(req, res, filePath) {
+module.exports = async function(req, res, filePath,config) {
   try {
     const stats = await stat(filePath);
 
